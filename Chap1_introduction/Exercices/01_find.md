@@ -20,4 +20,28 @@ db.collection.find({
 })
 ```
 
-## 3. Trouver tous les documents où  le grade est soit "master 4" soit "master 5".
+## 3. Trouver tous les documents où le grade est soit "master 4" soit "master 5".
+
+```js
+db.collection.find({
+  "grade": {
+    $in: [
+      "master 4",
+      "master 5"
+    ]
+  }
+})
+```
+
+## 4. Trouver les documents où le grade n'est ni "master 4" ni "master 5".
+
+```js
+db.collection.find({
+  "grade": {
+    $nin: [
+      "master 4",
+      "master 5"
+    ]
+  }
+})
+```
