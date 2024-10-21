@@ -256,26 +256,6 @@ AND ( `name` LIKE '/^B/' OR `name` LIKE '/^W/')
 
 Sans utiliser la méthode count dans un premier temps comptez le nombre de restaurants dans le quartier de Brooklyn.
 
-Indications : pour itérer sur une requête vous utiliserez l'une des deux syntaxes suivantes :
-
-```js
-// 1
-let count = 0;
-db.collection.find().forEach((doc) => console.log(doc));
-
-// 2
-let count = 0;
-const myCursor = db.users.find(restriction);
-while (myCursor.hasNext()) {
-  myCursor.next();
-}
-```
-
-Puis comparez le résultat avec la méthode count :
-
-```js
-db.collection.findOne(query, restriction).count();
-```
 
 ### Présentation des opérateurs MongoDB pour le filtrage des données
 
