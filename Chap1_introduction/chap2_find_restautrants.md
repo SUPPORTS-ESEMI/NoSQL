@@ -383,7 +383,7 @@ MongoDB utilise Perl compatible regular expressions (i.e. "PCRE" ) version 8.42 
 db.collection.find(query, restriction).sort({ key: 1 }); // 1 pour ordre croissant et -1 pour décroissant
 ```
 
-### 02 03. Quels sont les restaurants qui ont eu un grade A et un score supérieur ou égal à 20 ? Affichez uniquement les noms et ordonnez les par ordre décroissant. Affichez le nombre de résultat.
+### 02 03. Quels sont les restaurants qui ont eu un grade A et un score supérieur ou égal à 20 ? Affichez uniquement les noms et ordonnez les par ordre décroissant.  Puis donnez le nombre de résultat(s).
 
 Remarque pour la dernière partie de la question utilisez la méthode count :
 
