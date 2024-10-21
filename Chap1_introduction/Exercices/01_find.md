@@ -45,3 +45,16 @@ db.collection.find({
   }
 })
 ```
+
+## 5. Trouvez les documents où il y a exactement 2 notes utilisez l'opérateur $size
+
+```js
+db.collection.find({
+  "notes": {
+    $size: 2
+  }
+})
+```
+
+## 6. Trouver les étudiants qui ont soit une note égale à 15 soit une note supérieure à 18 
+
