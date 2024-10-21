@@ -237,8 +237,28 @@ db.restaurants.find(
     borough: "Brooklyn",
     $or: [{ name: /^B/ }, { name: /^W/ }],
   },
-  { name: 1, borough: 1 }
+  {  name: 1, _id: 0 }
 );
+
+// meilleurs syntaxe ordonné par ordre de nom
+
+db.restaurants.find(
+  {
+    $and : [
+      { borough: { $eq : "Brooklyn"  }},
+      {
+        $or: [
+          { name: /^B/ }, 
+          { name: /^W/ }
+        ]
+      }
+    ]
+  },
+  {  name: 1, _id: 0 }
+).sort({
+    name : 1
+})
+
 ```
 
 Cela correspondrait (...) en SQL à la requête suivante :
