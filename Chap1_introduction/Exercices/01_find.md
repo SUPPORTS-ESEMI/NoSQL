@@ -58,3 +58,49 @@ db.collection.find({
 
 ## 6. Trouver les étudiants qui ont soit une note égale à 15 soit une note supérieure à 18 
 
+```js
+db.collection.find({
+  $or: [
+    {
+      "notes": {
+        $eq: 15
+      }
+    },
+    {
+      "notes": {
+        $gte: 18
+      }
+    }
+  ]
+})
+```
+
+## 7. Trouver les étudiants qui sont en "master 5" et habitent à "London" ( comment descendre dans la structure pour matcher avec la bonne valeur "a.b" )
+
+```js
+db.collection.find({
+  $and: [
+    {
+      grade: "master 5"
+    },
+    {
+      "address.city": "London"
+    },
+    {
+      notes: {
+        $size: 4
+      }
+    }
+  ]
+})
+```
+
+## 8. Trouvez les noms ayant un s 
+
+```js
+db.collection.find({
+  name: {
+    "$regex": "s"
+  }
+})
+```
