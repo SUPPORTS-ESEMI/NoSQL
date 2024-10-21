@@ -18,6 +18,8 @@ MongoDB fournit plusieurs opérateurs pour affiner les recherches dans les docum
   Exemple : Trouver tous les documents où le nom est "Alan".
   ```js
   db.collection.find({ "name": { $eq: "Alan" } })
+
+    db.collection.find({ "name":  "Alan" })
   ```
 
 - `$ne` : Correspond à une valeur différente d'une valeur spécifiée.
