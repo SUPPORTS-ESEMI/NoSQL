@@ -389,8 +389,10 @@ db.collection.find(query, restriction).sort({ key: 1 }); // 1 pour ordre croissa
 db.restaurants
   .find(
     {
-      "grades.grade": "A",
-      "grades.score": { $gte: 20 },
+      $and : [
+        {  "grades.grade": "A" },
+        { "grades.score": { $gte: 20 } }
+      ]
     },
     {
       _id: 0,
@@ -399,7 +401,6 @@ db.restaurants
     }
   )
   .sort({ name: -1 });
-
 ```
 
 Remarque pour la dernière partie de la question utilisez la méthode count :
