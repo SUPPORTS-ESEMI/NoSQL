@@ -385,6 +385,23 @@ db.collection.find(query, restriction).sort({ key: 1 }); // 1 pour ordre croissa
 
 ### 02 03. Quels sont les restaurants qui ont eu un grade A et un score supérieur ou égal à 20 ? Affichez uniquement les noms et ordonnez les par ordre décroissant.  Puis donnez le nombre de résultat(s).
 
+```js
+db.restaurants
+  .find(
+    {
+      "grades.grade": "A",
+      "grades.score": { $gte: 20 },
+    },
+    {
+      _id: 0,
+      "grades.grade": 1,
+      "grades.score": 1,
+    }
+  )
+  .sort({ name: -1 });
+
+```
+
 Remarque pour la dernière partie de la question utilisez la méthode count :
 
 ```js
