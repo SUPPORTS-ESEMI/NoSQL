@@ -70,48 +70,20 @@ db.restaurants.aggregate([
 ```
 
 #### **Exercice 3 : Moyenne des scores**
-Pour les restaurants servant de la cuisine **Italienne**, calculez la moyenne des scores (`grades.score`). Affichez le nom du restaurant et sa moyenne.
+Pour les restaurants servant de la cuisine **Italienne**, calculez la moyenne des scores (`grades.score`).  Affichez le nom du restaurant et sa moyenne.
+
+```js
+
+db.restaurants.aggregate([
+    // pipe 1
+    // dépiler pour calculer par document sinon ça marche pas (données JSONB dans mongo)
+    { $unwind: "$grades"},
+    { $match : { cuisine : "Italian" }},
+    { $group: { _id : "$name", avgScore : { $avg : "$grades.score" } ,  total : { $sum : 1} } }, 
+
+    // pipe 2 un traitement dans la projection une nouvelle requete 
+    { $project : { _id : 1, avgScore : { $round : ["$avgScore", 2 ]} , total : 1} }
+])
+```
 
 ---
-
-#### **Exercice 4 : Top 5 des restaurants bien notés**
-Affichez les 5 restaurants avec le score moyen le plus élevé (tous types de cuisines confondus). Incluez le nom, la cuisine et le score moyen dans les résultats.
-
----
-
-#### **Exercice 5 : Restaurants avec plusieurs évaluations**
-Trouvez tous les restaurants qui ont **au moins 3 évaluations** dans leur champ `grades`. Affichez leur nom, leur borough et leur nombre d’évaluations.
-
----
-
-#### **Exercice 6 : Distribution des cuisines par borough**
-Calculez le nombre de restaurants pour chaque type de cuisine dans le borough de **Manhattan**. Triez les résultats par ordre décroissant.
-
----
-
-#### **Exercice 7 : Évaluations spécifiques**
-Trouvez tous les restaurants qui ont reçu une note "A" dans au moins une de leurs évaluations (`grades.grade`). Affichez le nom, la cuisine et le borough.
-
----
-
-#### **Exercice 8 : Meilleures cuisines à Queens**
-Pour les restaurants situés dans le borough de **Queens**, identifiez le type de cuisine avec le score moyen le plus élevé. Affichez la cuisine et le score moyen.
-
----
-
-#### **Exercice 9 : Répartition des scores**
-Décomposez les évaluations des restaurants situés sur "5th Ave" (champ `address.street`). Comptez combien de restaurants ont reçu chaque note (A, B, C).
-
----
-
-#### **Exercice 10 : Limitation géographique**
-Trouvez tous les restaurants dont les coordonnées (`address.coord`) sont comprises entre :
-- Longitude : -74.0 et -73.9.
-- Latitude : 40.7 et 40.8.
-Affichez leur nom, leur cuisine et leurs coordonnées.
-
----
-
-### **Ressources pour la résolution**
-- Utilisez des étapes comme `$match`, `$group`, `$project`, `$sort`, `$unwind`, `$limit`.
-- Si vous avez besoin d'un rappel des commandes ou d'une solution, n'hésitez pas à demander !
