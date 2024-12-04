@@ -19,17 +19,14 @@ Dans le jeu de données `restaurants` :
 #### **Solution possible**
 ```js
 db.restaurants.aggregate([
-    // Pipe 1: Filtrer par cuisine et par score minimal
+     // Pipe 1: Filtrer par cuisine et par score minimal
+     { $unwind: "$grades" },
     {
         $match: {
             cuisine: { $in: ["Italian", "French", "Japanese"] },
             "grades.score": { $gte: 20 }
         }
     },
-    // Pipe 2: Décompresser les scores pour chaque note d'un restaurant
-    { $unwind: "$grades" },
-    { $match: { "grades.score": { $gte: 20 } } },
-    // Pipe 3: Regrouper par cuisine
     {
         $group: {
             _id: "$cuisine",
@@ -37,11 +34,11 @@ db.restaurants.aggregate([
             restaurantCount: { $sum: 1 }
         }
     },
-    // Pipe 4: Trier par score moyen décroissant
     { $sort: { averageScore: -1 } },
-    // Pipe 5: Limiter aux 5 premières cuisines
     { $limit: 5 },
-    // Pipe 6: Reformater la sortie
+   
+     // Pipe 2: projection
+
     {
         $project: {
             _id: 0,
