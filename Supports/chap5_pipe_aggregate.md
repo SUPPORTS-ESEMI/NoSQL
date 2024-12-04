@@ -18,36 +18,36 @@ Dans le jeu de données `restaurants` :
 
 #### **Solution possible**
 ```js
-db.restaurants.aggregate([
-     // Pipe 1: Filtrer par cuisine et par score minimal
-     { $unwind: "$grades" },
-    {
-        $match: {
-            cuisine: { $in: ["Italian", "French", "Japanese"] },
-            "grades.score": { $gte: 20 }
-        }
-    },
-    {
-        $group: {
-            _id: "$cuisine",
-            averageScore: { $avg: "$grades.score" },
-            restaurantCount: { $sum: 1 }
-        }
-    },
-    { $sort: { averageScore: -1 } },
-    { $limit: 5 },
-   
-     // Pipe 2: projection
+db.restaurants.aggregate(
+    [
+        // pipe 1 filtrer par cuisine et par score min 
+        { $unwind: "$grades" },
+        {
+            $match: {
+                cuisine: { $in: ["Italian", "French", "Japanese"] },
+                "grades.score": { $gte: 20 }
+            }
+        },
+        {
+            $group : {
+                _id : "$cuisine",
+                averageScore : { $avg : "$grades.score"}
+            }
+        },
+        { $sort : { averageScore : -1 }},
+        { $limit : 2 },  // les deux meilleurs 
 
-    {
-        $project: {
-            _id: 0,
-            cuisine: "$_id",
-            averageScore: { $round: ["$averageScore", 2] },
-            restaurantCount: 1
+        // pipe 2 améliorer la présentation
+        {
+            $project : {
+                _id : 0,
+                cuisine : "$_id", // récupérer dynamiquement le nom des restaurants
+                averageScore : { $round: ["$averageScore", 2]} , // arrondir les résultats à 2 chiffres après la virgule
+                restaurantCount : 1
+            }
         }
-    }
-]);
+    ]
+)
 ```
 
 ---
