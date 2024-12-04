@@ -12,8 +12,13 @@ La méthode `insertOne` permet d'ajouter un seul document dans une collection.
 #### Exemple :
 ```js
 
+# création de la base de données
 use school
 
+# création d'une collection users 
+db.createCollection('users')
+
+# insertion de document dans la collection
 db.users.insertOne({
     name: "John Doe",
     email: "john.doe@example.com",
@@ -22,6 +27,8 @@ db.users.insertOne({
 ```
 
 - **Résultat attendu** : Un nouvel objet est inséré dans la collection `users`.
+
+Remarque sur l'insertion. 
 
 ---
 
